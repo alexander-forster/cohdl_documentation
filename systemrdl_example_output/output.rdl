@@ -1,0 +1,186 @@
+addrmap AddrMap {
+  name = "AddrMap";
+  desc = "This example address map contains all register types defined in this notebook.
+
+    Use std.VhdlCompiler to turn it into synthesizable VHDL.
+    Use to_systemd_rdl to generate html documentation or C headers.";
+  default regwidth = 32;
+  
+  
+  reg {
+    
+    field {
+    } inp_a [7:0];
+    
+    field {
+    } inp_b [15:8];
+    
+    field {
+    } output [31:24];
+  } reg_or @ 0x0;
+  
+  
+  reg {
+    desc = "this is the and operation";
+    
+    field {
+    } inp_a [7:0];
+    
+    field {
+    } inp_b [15:8];
+    
+    field {
+      desc = "this text describes the output field";
+      sw = r;
+    } output [31:24];
+  } reg_bin_and @ 0x10;
+  
+  
+  reg {
+    desc = "this is the or operation";
+    
+    field {
+    } inp_a [7:0];
+    
+    field {
+    } inp_b [15:8];
+    
+    field {
+      desc = "this text describes the output field";
+      sw = r;
+    } output [31:24];
+  } reg_bin_or @ 0x14;
+  
+  
+  reg {
+    desc = "this is the xor operation";
+    
+    field {
+    } inp_a [7:0];
+    
+    field {
+    } inp_b [15:8];
+    
+    field {
+      desc = "this text describes the output field";
+      sw = r;
+    } output [31:24];
+  } reg_bin_xor @ 0x18;
+  
+  
+  addrmap clk {
+    name = "clk";
+    desc = "Defines a counter, that is incremented synchronous to the
+    bus clock. The counter value can be used as an accurate time source.";
+    
+    reg {
+      desc = "contains the control parameters of the clock device";
+      
+      field {
+        desc = "set this field to '1' to start the clock";
+      } enable [0:0] = 0;
+      
+      field {
+        desc = "prescaler factor";
+      } prescaler [31:16] = 1;
+    } ctrl @ 0x0;
+    
+    
+    reg {
+      field { sw = w; } \all [31:0];
+    } count @ 0x4;
+    
+  } clk @ 0x20;
+  
+  
+  reg {
+    desc = "controls the brightness of the three color channels of an rgb LED";
+    
+    field {
+      desc = "controls strength of color red";
+    } \r [7:0] = 0;
+    
+    field {
+      desc = "controls strength of color green";
+    } g [15:8] = 0;
+    
+    field {
+      desc = "controls strength of color blue";
+    } b [23:16] = 0;
+  } rgb @ 0x30;
+  
+  
+  reg {
+    desc = "Example for a register that performs a slow task.
+    Write '1' to 'flag' to start the task. This bit will be cleared
+    automatically once the task is done and the register is ready
+    to process more data.";
+    
+    field {
+      desc = "input data of the operations";
+    } input [15:0];
+    
+    field {
+      desc = "write '1' to start operation";
+    } flag [16:16] = 0;
+  } slow @ 0x40;
+  
+  
+  reg {
+    desc = "This register demonstrates, how notification types can be used to react to
+    register reads/writes. The fields `read_count` and `write_count` are incremented
+    every time the respective operation is performed on the register.
+    `data` is a normal register field that can be read and written.";
+    
+    field {
+    } data [15:0] = 0;
+    
+    field {
+      desc = "incremented each time the register is read";
+      sw = r;
+    } read_count [23:16] = 0;
+    
+    field {
+      desc = "incremented each time the register is written";
+      sw = r;
+    } write_count [31:24] = 0;
+  } notify @ 0x50;
+  
+  
+  reg {
+    desc = "This register demonstrates an alternative way to implement read/write behavior
+    of register types. It overloads the methods _on_read_ and _on_write_
+    to inject code into the bus transaction itself.
+
+    _on_write_ is called for every write access to the current register address.
+    The received data is converted to in instance of Self and used as the single argument.
+    The returned value is used to update MemFields and FlagFields.
+
+    _on_read_ is called for every read access to the current register address.
+    It takes no arguments. The returned value - an instance of Self - is converted
+    to a 32-Bit vector and passed to the read response.";
+    
+    field {
+    } field_a [7:0];
+    
+    field {
+    } field_b [15:8];
+    
+    field {
+    } output [31:24];
+  } customized @ 0x60;
+  
+  
+  external mem {
+    sw = r;
+    mementries = 64;
+    memwidth = 32;
+  } ro_memory @ 0x1000;
+  
+  
+  external mem {
+    mementries = 512;
+    memwidth = 32;
+  } rw_memory @ 0x2000;
+  
+};
