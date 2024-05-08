@@ -94,7 +94,7 @@ addrmap AddrMap {
   
   
   reg {
-    desc = "controls the brightness of the three color channels of an rgb LED";
+    desc = "controls the brightness of the three color channels of an RGB LED";
     
     field {
       desc = "controls strength of color red";
