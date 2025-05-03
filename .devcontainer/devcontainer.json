@@ -1,0 +1,21 @@
+{
+    "image": "cohdl/cohdl:0.2.4",
+    //"build": { "dockerfile": "Dockerfile" },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.debugpy",
+                "ms-toolsai.jupyter"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/opt/venv/bin/python",
+                "jupyter.kernels.excludePythonEnvironments": [
+                    "/bin/python3",
+                    "/usr/bin/python3"
+                ]
+            }
+        }
+    }
+}

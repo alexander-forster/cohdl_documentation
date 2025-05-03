@@ -1,0 +1,12 @@
+cohdl==0.2.4
+cohdl_sim==0.2.4
+cohdl_yosys==0.2.4
+
+click==8.1.8
+wavedrom==2.0.3.post3
+vcd2wavedrom @ git+https://github.com/Toroid-io/vcd2wavedrom@7caf6d5e0b9f85bff943ddea928818e62c5d9e9e
+cssutils==2.11.1
+xmltodict==0.14.2
+
+ipykernel==6.29.5
+ipython==9.0.2
